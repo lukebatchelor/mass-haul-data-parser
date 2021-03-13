@@ -14,6 +14,9 @@ import {
 } from '@material-ui/core';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import { useDropzone } from 'react-dropzone';
+import Confetti from 'react-confetti';
+import useKonami from 'react-use-konami';
+
 import { DataTable } from './DataTable';
 
 const useStyles = makeStyles((theme) => ({
@@ -56,12 +59,15 @@ export function App(props: AppProps) {
   const classes = useStyles();
   const [rptString, setRptString] = useState<string>(null);
   const dataTableEl = useRef(null);
+  const [showConfetti, setShowConfetti] = useState<Boolean>(false);
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     const text = await file.text();
     setRptString(text);
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  useKonami(() => setShowConfetti(true));
 
   const reset = () => setRptString(null);
   const selectAll = () => {
@@ -123,6 +129,7 @@ export function App(props: AppProps) {
           </Paper>
         </>
       )}
+      {showConfetti && <Confetti />}
     </Container>
   );
 }
