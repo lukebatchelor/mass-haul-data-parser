@@ -82,11 +82,11 @@ export function App(props: AppProps) {
       </AppBar>
       <Box mt={12} />
       {!rptString && (
-        <>
-          <Typography variant="body1" align="center">
-            Mass Haul Data Parser - a very minimal app for parsing .rpt files
+        <Box display="flex" flexDirection="column" justifyContent="center" height="100%">
+          <Typography variant="h5" align="center" style={{ textDecoration: 'underline' }}>
+            A very minimal app for parsing .rpt files
           </Typography>
-          <Box mt={2} />
+          <Box mt={15} />
           <Paper {...getRootProps()} className={classes.paper}>
             <Box
               display="flex"
@@ -106,7 +106,7 @@ export function App(props: AppProps) {
               )}
             </Box>
           </Paper>
-        </>
+        </Box>
       )}
       {rptString && (
         <>
