@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     textAlign: 'center',
-    minHeight: '500px',
+    minHeight: '50vh',
     paddingTop: theme.spacing(2),
     marginBottom: theme.spacing(4),
     display: 'flex',
