@@ -1,6 +1,6 @@
 {
-  "short_name": "2020 Static Template",
-  "name": "2020 Typescript Webpack Static App Template",
+  "short_name": "Mass Haul Data",
+  "name": "Mass Haul Data Parser",
   "icons": [
     {
       "src": "favicon.ico",

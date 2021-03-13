@@ -25,13 +25,15 @@ function parseRptString(rptString: string): RPTData {
 
 type DataTableProps = {
   rptFileString: string;
+  dataTableId: string;
+  dataTableRef: React.Ref<HTMLElement>;
 };
 export function DataTable(props: DataTableProps) {
   const classes = useStyles();
   const rptData = parseRptString(props.rptFileString);
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} id={props.dataTableId} ref={props.dataTableRef} innerRef={props.dataTableRef}>
       <Table className={classes.table} aria-label="Mass Haul Data">
         <TableHead>
           <TableRow>
@@ -42,8 +44,8 @@ export function DataTable(props: DataTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rptData.map((data) => (
-            <TableRow>
+          {rptData.map((data, idx) => (
+            <TableRow key={idx}>
               <TableCell>{data[0]}</TableCell>
               <TableCell>{data[1]}</TableCell>
               <TableCell>{data[2]}</TableCell>
