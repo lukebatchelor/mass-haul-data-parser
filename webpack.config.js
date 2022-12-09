@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
+const PORT = process.env.PORT || '8000';
 
 const config = {
   context: path.resolve(__dirname, 'src/'),
@@ -15,7 +16,7 @@ const config = {
     contentBase: path.resolve(__dirname, './public'),
     contentBasePublicPath: '/',
     stats: 'errors-only',
-    port: 8000,
+    port: PORT,
     compress: true,
   },
   resolve: {
@@ -27,7 +28,7 @@ const config = {
   plugins: [
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
-      PUBLIC_URL: 'http://localhost:8000',
+      PUBLIC_URL: 'http://localhost:' + PORT,
     }),
     new CopyPlugin({
       patterns: [{ from: '../public', to: './' }],

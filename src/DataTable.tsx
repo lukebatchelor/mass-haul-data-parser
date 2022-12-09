@@ -12,8 +12,8 @@ function parseRptString(rptString: string): RPTData {
   return rptString
     .split('Volumes from')
     .map((part) => {
-      if (!part.match(/Chainage \d+ to \d+/)) return null;
-      const chainageStr = part.match(/Chainage \d+ to \d+/)[0];
+      if (!part.match(/\(with plan polygon ".+?"\)/)) return null;
+      const chainageStr = part.match(/\(with plan polygon "(.+?)"\)/)[1];
       const cut = part.match(/Total cut .+ (-?\d+\.\d+)/)[1];
       const fill = part.match(/Total fill .+ (-?\d+\.\d+)/)[1];
       const balance = part.match(/Total balance .+ (-?\d+\.\d+)/)[1];
@@ -27,10 +27,12 @@ type DataTableProps = {
   rptFileString: string;
   dataTableId: string;
   dataTableRef: React.Ref<HTMLElement>;
+  makeCutsPositive: boolean;
 };
 export function DataTable(props: DataTableProps) {
   const classes = useStyles();
   const rptData = parseRptString(props.rptFileString);
+  const makeCutsPositive = props.makeCutsPositive;
 
   return (
     <TableContainer component={Paper} id={props.dataTableId} ref={props.dataTableRef} innerRef={props.dataTableRef}>
@@ -47,7 +49,7 @@ export function DataTable(props: DataTableProps) {
           {rptData.map((data, idx) => (
             <TableRow key={idx}>
               <TableCell>{data[0]}</TableCell>
-              <TableCell>{data[1]}</TableCell>
+              <TableCell>{makeCutsPositive ? Math.abs(Number(data[1])).toFixed(3) : data[1]}</TableCell>
               <TableCell>{data[2]}</TableCell>
               <TableCell>{data[3]}</TableCell>
             </TableRow>

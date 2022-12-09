@@ -11,6 +11,9 @@ import {
   Box,
   Paper,
   Button,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
 } from '@material-ui/core';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import { useDropzone } from 'react-dropzone';
@@ -59,7 +62,8 @@ export function App(props: AppProps) {
   const classes = useStyles();
   const [rptString, setRptString] = useState<string>(null);
   const dataTableEl = useRef(null);
-  const [showConfetti, setShowConfetti] = useState<Boolean>(false);
+  const [showConfetti, setShowConfetti] = useState<boolean>(false);
+  const [makeCutsPositive, setMakeCutsPositive] = useState<boolean>(false);
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     const text = await file.text();
@@ -73,6 +77,7 @@ export function App(props: AppProps) {
   const selectAll = () => {
     selectText(dataTableEl.current);
   };
+  const onCutsPositiveChange = (e: React.ChangeEvent<HTMLInputElement>) => setMakeCutsPositive(e.target.checked);
 
   return (
     <Container>
@@ -117,6 +122,12 @@ export function App(props: AppProps) {
       {rptString && (
         <>
           <Box mt={10} mb={5} display="flex" justifyContent="space-evenly">
+            <FormGroup>
+              <FormControlLabel
+                control={<Checkbox checked={makeCutsPositive} onChange={onCutsPositiveChange} />}
+                label="Make cuts positive"
+              />
+            </FormGroup>
             <Button variant="contained" color="primary" onClick={selectAll}>
               Select All
             </Button>
@@ -125,7 +136,12 @@ export function App(props: AppProps) {
             </Button>
           </Box>
           <Paper className={classes.paper}>
-            <DataTable rptFileString={rptString} dataTableId="data-table" dataTableRef={dataTableEl} />
+            <DataTable
+              rptFileString={rptString}
+              dataTableId="data-table"
+              dataTableRef={dataTableEl}
+              makeCutsPositive={makeCutsPositive}
+            />
           </Paper>
         </>
       )}
